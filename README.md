@@ -4,4 +4,4 @@ This is a simple CRM software to store contacts and notes along with them, creat
 | Input      | Value |
 | ----------- | ----------- |
 | Email      | james@tblcrm.com       |
-| Password   | Password123        |
+| Password   | password123        |

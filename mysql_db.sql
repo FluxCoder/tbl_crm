@@ -23,7 +23,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Data exporting was unselected.
+-- Dumping data for table tbl_crm.users: ~1 rows (approximately)
+INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
+	(1, 'James', 'james@tblcrm.com', 'JDJ5JDEwJDBtaWNoSWF4NjBBQTNXRkhyYUlBTnU2M3JReUhSRjh4MjV1T25oUHRvZ3ppS09JQUdyRURl');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

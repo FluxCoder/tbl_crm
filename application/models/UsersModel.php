@@ -13,7 +13,7 @@ class UsersModel extends CI_Model {
 
     /* Locked columns */
     private $locked_cols = [
-        'id'
+        ''
     ];
 
 

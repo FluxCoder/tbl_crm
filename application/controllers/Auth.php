@@ -6,7 +6,7 @@ class Auth extends CI_Controller {
     /**
      * Main login function, this is used both for he login proccess and the view.
      * 
-     * @note I didn't want to use this for both, but I did :shrug:
+     * @note I didn't want to use this for both view/form submit, but I did :shrug:
      *
      * @return void
      */
@@ -17,7 +17,8 @@ class Auth extends CI_Controller {
             return $this->load->view('auth/login');
         }
 
-
+        
+        
         /**
          * Use the CodeIgniter form validation function
          * 
@@ -31,6 +32,7 @@ class Auth extends CI_Controller {
         $this->load->library('Password');
         $this->load->library('session');
         $this->load->library('form_validation');
+        // print_r($this->password->hash('password123'));
 
         // Set validaiton rules
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -57,7 +59,8 @@ class Auth extends CI_Controller {
         if($match){
             // Set session data
             $this->session->is_logged_in = true;
-            $this->session->set_userdata('userid', $user->id);
+            $this->session->set_userdata('user_id', $user->id);
+            $this->session->set_userdata('password_hash', $user->password);
 
             // This is set so that if someone changes their password, they are logged out from everywhere.
             $this->session->set_userdata('pwhash', md5($user->password)); 

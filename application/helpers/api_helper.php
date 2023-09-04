@@ -41,7 +41,7 @@ function APIFinish($data = null){
  * @param boolean $hasMutliple
  * @return void
  */
-function APIError($data = null, $hasMutliple = false){
+function APIError($data = null, $hasMutliple = false, $message = 'Multiple errors'){
 
     // Make sure to change the response type to json
     header('Content-type: application/json');
@@ -62,7 +62,7 @@ function APIError($data = null, $hasMutliple = false){
     } else {
         $response = [
             'status' => 0,
-            'message' => 'Multiple errors',
+            'message' => $message,
             'errors' => $data
         ];
     }

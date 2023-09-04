@@ -29,11 +29,11 @@
                   <div class="errorbox"></div>
                   <div class="form-group">
                      <label>Email address</label>
-                     <input type="email" name='email' class="form-control" placeholder="Email address" autofocus required>
+                     <input type="email" name='email' class="form-control" placeholder="Email address" autofocus>
                   </div>
                   <div class="form-group">
                      <label>Password</label>
-                     <input type="password" name='password' class="form-control" placeholder="Password" required>
+                     <input type="password" name='password' class="form-control" placeholder="Password" >
                   </div>
                   <button type="submit" class="btn btn-black">Login</button>
                   <!-- <button type="submit" class="btn btn-secondary">Register</button> -->
@@ -46,14 +46,26 @@
       <script>
         $(function() {
 
+         // Remove errors from input on change
+         $('form[action=login]').delegate('input', 'change', function(e){
+            $(this).removeClass('haserror');
+            
+            // Remove the error text as well
+
+         });
+
             $('form[action=login]').on('submit', function(e){
                 e.preventDefault();
+
+                // Remove all form errors
+                $('.form-input-error').remove();
+                $('.haserror').removeClass('haserror');
 
                 var formData = $(this).serialize();
 
                $.ajax({
                   type: "POST",
-                  url: "/auth/login",
+                  url: "/auth/login/submit",
                   data: formData,
                }).done(function (data) {
                   if(typeof data.status !== "undefined"){
@@ -64,6 +76,17 @@
                      } else {
                         // Add error to error box 
                         $('.errorbox').html('<div class="alert alert-warning" role="alert">'+data.message+'</div>');
+
+                        // Check if there is more than one error in the response 
+                        if(typeof data.errors !== "undefined"){
+                           $.each(data.errors, function(key,value) {
+                              $('input[name='+key+']').addClass('haserror');
+                              $('input[name='+key+']').after('<p for='+key+' class="form-input-error">'+value+'</p>');
+                              console.log(key, value);
+                           }); 
+
+                        }
+
                      }
 
                   } else {

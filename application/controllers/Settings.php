@@ -33,11 +33,7 @@ class Settings extends CI_Controller {
 
         $this->load->model('UsersModel');
         $this->load->helper('api');
-        $this->load->library('Password');
-        $this->load->library('session');
-        $this->load->library('form_validation');
-        $this->load->model('UsersModel');
-
+        $this->load->library(['Password','session','form_validation']);
 
         // Set validation rules
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -45,7 +41,7 @@ class Settings extends CI_Controller {
         $this->form_validation->set_rules('new_password', 'New password', 'min_length[5]');
         $this->form_validation->set_rules('re_new_password', 'Re new password', 'matches[new_password]');
 
-        // Check form vlidation
+        // Check form validation
         if ($this->form_validation->run() == FALSE){
             // print_r(validation_errors());
             APIError($this->form_validation->error_array(), true, 'Please fix the issues displayed on the form');
@@ -57,7 +53,7 @@ class Settings extends CI_Controller {
 
         // Check if we are going to be updating the password
         if( ! $this->input->post('password')  == '' && ! empty($this->input->post('new_password'))){ 
-            // Check if the password is correct.
+            // Check if the password is correct.    
 
             $password = $this->input->post('new_password');
 

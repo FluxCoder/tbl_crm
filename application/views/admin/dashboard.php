@@ -60,84 +60,54 @@
 
           </div>
           <!-- ============================================================== -->
-          <!-- RECENT SALES -->
+          <!-- RECENT CONTACTS -->
           <!-- ============================================================== -->
           <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
               <div class="white-box">
                 <div class="d-md-flex mb-3">
-                  <h3 class="box-title mb-0">Recent sales</h3>
+                  <h3 class="box-title mb-0">Recently added contacts</h3>
                   <div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
-                    <select class="form-select shadow-none row border-top">
-                      <option>March 2021</option>
-                      <option>April 2021</option>
-                      <option>May 2021</option>
-                      <option>June 2021</option>
-                      <option>July 2021</option>
-                    </select>
+                    Feel like I should add something here
                   </div>
                 </div>
                 <div class="table-responsive">
                   <table class="table no-wrap">
                     <thead>
                       <tr>
-                        <th class="border-top-0">#</th>
                         <th class="border-top-0">Name</th>
-                        <th class="border-top-0">Status</th>
-                        <th class="border-top-0">Date</th>
-                        <th class="border-top-0">Price</th>
+                        <th class="border-top-0">Email</th>
+                        <th class="border-top-0">Phone</th>
+                        <th class="border-top-0">Added</th>
+                        <th class="border-top-0"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td class="txt-oflo">Elite admin</td>
-                        <td>SALE</td>
-                        <td class="txt-oflo">April 18, 2021</td>
-                        <td><span class="text-success">$24</span></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td class="txt-oflo">Real Homes WP Theme</td>
-                        <td>EXTENDED</td>
-                        <td class="txt-oflo">April 19, 2021</td>
-                        <td><span class="text-info">$1250</span></td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td class="txt-oflo">Ample Admin</td>
-                        <td>EXTENDED</td>
-                        <td class="txt-oflo">April 19, 2021</td>
-                        <td><span class="text-info">$1250</span></td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td class="txt-oflo">Medical Pro WP Theme</td>
-                        <td>TAX</td>
-                        <td class="txt-oflo">April 20, 2021</td>
-                        <td><span class="text-danger">-$24</span></td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td class="txt-oflo">Hosting press html</td>
-                        <td>SALE</td>
-                        <td class="txt-oflo">April 21, 2021</td>
-                        <td><span class="text-success">$24</span></td>
-                      </tr>
-                      <tr>
-                        <td>6</td>
-                        <td class="txt-oflo">Digital Agency PSD</td>
-                        <td>SALE</td>
-                        <td class="txt-oflo">April 23, 2021</td>
-                        <td><span class="text-danger">-$14</span></td>
-                      </tr>
-                      <tr>
-                        <td>7</td>
-                        <td class="txt-oflo">Helping Hands WP Theme</td>
-                        <td>MEMBER</td>
-                        <td class="txt-oflo">April 22, 2021</td>
-                        <td><span class="text-success">$64</span></td>
-                      </tr>
+                      <?php 
+
+                      $CI =& get_instance();
+                      $CI->load->library('customencryption');
+
+                      foreach($contacts as $contact){
+                        // I wnat April 14, 2021
+                        $added_date = date('F d, Y ', $contact->created_at);
+                        $key = $CI->customencryption->encrypt($contact->id);
+
+                        echo "
+                        <tr>
+                          <td>{$contact->first_name} {$contact->last_name}</td>
+                          <td><a href='mailto:$contact->email'>$contact->email</a></td>
+                          <td><a href='tel:$contact->phone'>$contact->phone</a></td>
+                          <td>{$added_date}</td>
+                          <td>
+                            <a href='/contacts/view/$key'>View</a> | 
+                            <a href='/contacts/edit/$key'>Edit</a>
+                          </td>
+                        </tr>
+                        ";
+                      }
+
+                      ?>
                     </tbody>
                   </table>
                 </div>

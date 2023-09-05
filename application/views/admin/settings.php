@@ -27,9 +27,6 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-          <!-- ============================================================== -->
-          <!-- Three charts -->
-          <!-- ============================================================== -->
           <div class="row justify-content-center">
             <div class="col-lg-4">
               <div class="white-box analytics-info">
@@ -85,6 +82,8 @@
             $(this).removeClass('haserror');
             
             // Remove the error text as well
+            $('p[for='+$(this).attr('name')+']').remove();
+            // console.log($(this).attr('for'));
 
          });
 
@@ -116,9 +115,8 @@
                         if(typeof data.errors !== "undefined"){
                            $.each(data.errors, function(key,value) {
                               $('input[name='+key+']').addClass('haserror');
-                              $('input[name='+key+']').after('<p for='+key+' class="form-input-error">'+value+'</p>');
-                              console.log(key, value);
-                           }); 
+                              $('input[name='+key+']').after('<p for="'+key+'" class="form-input-error">'+value+'</p>');
+                            }); 
 
                         }
 

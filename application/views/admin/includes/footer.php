@@ -43,7 +43,9 @@
       </div>
       <div class="modal-body">
 
-      <form action="" id='#NewContactform'>
+      <form action="NewContactform">
+
+      <div class="errorbox_popup"></div>
 
         <div class="form-group">
             <label for="contact_firstname">First name</label>
@@ -79,4 +81,73 @@
     </div>
   </div>
 </div>
+
+      <script>
+        $(function() {
+
+          $('#NewContactSubmitBTN').on('click', function(e){
+            e.preventDefault();
+            $('form[action=NewContactform]').submit();
+
+          })
+
+         // Remove errors from input on change
+         $('form[action=NewContactform]').delegate('input', 'change', function(e){
+            $(this).removeClass('haserror');
+            
+            // Remove the error text as well
+            $('p[for='+$(this).attr('name')+']').remove();
+            // console.log($(this).attr('for'));
+
+         });
+
+            $('form[action=NewContactform]').on('submit', function(e){
+                e.preventDefault();
+
+                // Remove all form errors
+                $('.form-input-error').remove();
+                $('.haserror').removeClass('haserror');
+
+                var formData = $(this).serialize();
+                $('.errorbox_popup').html('');
+
+               $.ajax({
+                  type: "POST",
+                  url: "/contacts/create",
+                  data: formData,
+               }).done(function (data) {
+                  if(typeof data.status !== "undefined"){
+
+                     // Check status 
+                     if(data.status == '1'){
+                      if(typeof data.url !== "undefined"){
+                        location.replace(data.url);
+                      }
+                      $('.errorbox_popup').html('<div class="alert alert-success" role="alert">'+data.message+'</div>');
+                     } else {
+                        // Add error to error box 
+                        $('.errorbox_popup').html('<div class="alert alert-warning" role="alert">'+data.message+'</div>');
+
+                        // Check if there is more than one error in the response 
+                        if(typeof data.errors !== "undefined"){
+                           $.each(data.errors, function(key,value) {
+                              $('input[name='+key+']').addClass('haserror');
+                              $('input[name='+key+']').after('<p for="'+key+'" class="form-input-error">'+value+'</p>');
+                            }); 
+
+                        }
+
+                     }
+
+                  } else {
+                     // Add error to error box
+                     $('.errorbox_popup').html('<div class="alert alert-warning" role="alert">There was an error, please try again later.</div>');
+                  }
+               });
+
+            })
+
+        });
+    </script>
+
 </html>

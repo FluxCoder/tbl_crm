@@ -5,3 +5,6 @@ This is a simple CRM software to store contacts and notes along with them, creat
 | ----------- | ----------- |
 | Email      | james@tblcrm.com       |
 | Password   | password123        |
+
+## Setting up
+To setup, you'll neeed to import the sql file that is in the root directory, and change the db information in the config file to connect to your database.

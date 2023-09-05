@@ -46,7 +46,8 @@
                   </div>
                   <div class="form-group">
                     <hr />
-                    <p>You'll only need to fill out the password fields if you are updating your password.</p>
+                    <p><small>You'll only need to fill out the password fields if you are updating your password.</small>
+                    <small>Changing your password will log you out of all other sessions</small></p>
                   </div>
                   <div class="form-group">
                      <label>Current password</label>
@@ -60,7 +61,7 @@
                      <label>Re-enter new password</label>
                      <input type="password" name='re_new_password' class="form-control" placeholder="Password" >
                   </div>
-                  <button type="submit" class="btn btn-success btn-md">Update</button>
+                  <button type="submit" class="btn btn-success btn-md">Update</button><br />
                   <!-- <button type="submit" class="btn btn-secondary">Register</button> -->
                </form>
 

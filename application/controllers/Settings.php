@@ -36,6 +36,7 @@ class Settings extends CI_Controller {
         $this->load->library('Password');
         $this->load->library('session');
         $this->load->library('form_validation');
+        $this->load->model('UsersModel');
 
 
         // Set validation rules
@@ -55,12 +56,20 @@ class Settings extends CI_Controller {
         $this->db->set('email', $this->input->post('email'));
 
         // Check if we are going to be updating the password
-        if( ! $this->input->post('password')  == ''){
+        if( ! $this->input->post('password')  == '' && ! empty($this->input->post('new_password'))){ 
             // Check if the password is correct.
 
             $password = $this->input->post('new_password');
 
-            $match = $this->password->verify_hash($this->input->post('password'), $this->session->userdata('password_hash'));
+            // Get the user
+            $user = $this->UsersModel->get_by('id', $this->session->userdata('user_id'));
+
+            // Check that we have the user
+            if( ! $user){
+                APIError('There was an error, please try again later');
+            }
+
+            $match = $this->password->verify_hash($this->input->post('password'), $user->password);
             if($match){
 
                 // Hash the password
@@ -68,7 +77,7 @@ class Settings extends CI_Controller {
 
                 // Update the password
                 $this->db->set('password', $password_hashed);
-                $this->session->set_userdata('password_hash', $password_hashed);
+                $this->session->set_userdata('password_hash', md5($password_hashed));
 
             } else {
                 APIError(['password' => 'Password is incorrect'], true, 'Password is incorrect');

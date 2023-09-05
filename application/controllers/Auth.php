@@ -60,7 +60,7 @@ class Auth extends CI_Controller {
             // Set session data
             $this->session->is_logged_in = true;
             $this->session->set_userdata('user_id', $user->id);
-            $this->session->set_userdata('password_hash', $user->password);
+            $this->session->set_userdata('password_hash', md5($user->password));
 
             // This is set so that if someone changes their password, they are logged out from everywhere.
             $this->session->set_userdata('pwhash', md5($user->password)); 

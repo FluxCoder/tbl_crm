@@ -14,18 +14,47 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+-- Dumping structure for table tbl_crm.contacts
+CREATE TABLE IF NOT EXISTS `contacts` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `created_at` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table tbl_crm.contacts: ~0 rows (approximately)
+
+-- Dumping structure for table tbl_crm.notes
+CREATE TABLE IF NOT EXISTS `notes` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `contact_id` bigint NOT NULL,
+  `content` text NOT NULL,
+  `created_at` int NOT NULL DEFAULT '0',
+  `created_by` int NOT NULL DEFAULT '0',
+  `updated_at` int DEFAULT '0',
+  `updated_by` bigint DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `contact_key` (`contact_id`),
+  CONSTRAINT `contact_key` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table tbl_crm.notes: ~0 rows (approximately)
+
 -- Dumping structure for table tbl_crm.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `password` text NOT NULL,
-  KEY `id` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table tbl_crm.users: ~1 rows (approximately)
 INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
-	(1, 'James', 'james@tblcrm.com', 'JDJ5JDEwJDBtaWNoSWF4NjBBQTNXRkhyYUlBTnU2M3JReUhSRjh4MjV1T25oUHRvZ3ppS09JQUdyRURl');
+	(1, 'James', 'james@tblcrm.com', 'JDJ5JDEwJEEyZGFPTkVoQ01zRFYyQ1dVbEVodi5xOVRhcmZ5TTlMNEtVNi55S2dKbEpuYlJSaDNobVdt');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
